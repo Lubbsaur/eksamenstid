@@ -39,13 +39,15 @@
             <ul id="todolist">
                 <!-- De to listeelementene skal byttes ut med utskrift av data fra programkoden i <script> -->
                 <li>
-                    <span class="tast-text">Les eksamensteksten</span>
+                    <span class="task-text">Les eksamensteksten</span>
                     <span class="task-status task-status-done">Done</span>
                 </li>
+                <!--
                 <li>
-                    <span class="tast-text">Løs oppgavene i InnfProg-eksamen</span>
+                    <span class="tast-text">Løs Innføring i programmerings-eksamen</span>
                     <span class="task-status task-status-todo">To do</span>
                 </li>
+                -->
             </ul>
         </section>
         <footer><p>Adminpanel IPv1.0</p></footer>
@@ -90,11 +92,92 @@
         //TODOS
         const todos = [
             {text: "Les eksamensteksten", status: "Done"},
-            {text: "Løs Innføring i programmerings-eksamen", status: "To do"},
+            {text: "Løs Innføring i programmerings-eksamen", status: "Done"},
             {text: "Lag funksjonalitet for å registrere nye oppgaver", status: "To do"},
-            {text: "Lag funksjonalitet for å sette en eksisterende oppgave til utført ved å endre status", status: "To do"}
+            {text: "Lag funksjonalitet for å sette en eksisterende oppgave til utført ved å endre status", status: "To do"},
+            {text: "Dette er en test", status: "Done"}
         ]
 
+        const innerTodos = document.getElementById('todolist')
+        
+        let todosText = '';
+
+        function todoListText() {
+            todos.forEach((todosObject, index) => {
+                const {text, status} = todosObject;
+                console.log(todosObject.status)
+                if (todosObject.status === "Done") {
+                    const html = `
+                    <li>
+                    <span class="task-test">${text}</span>
+                    <span class="task-status task-status-done">${status}</span>
+                    </li>
+                    `;
+                    todosText += html;
+                } else {
+                    const html = `
+                    <li>
+                    <span class="task-test">${text}</span>
+                    <span class="task-status task-status-todo">${status}</span>
+                    </li>
+                    `;
+                    todosText += html;
+                }
+            });
+        
+            innerTodos.innerHTML = todosText;
+
+        };
+
+        let todosStatus = '';
+
+        todoListText();
+
+        /*function todoListStatus() {
+            todos.forEach((todosObjectStatus, index) => {
+                const {status} = todosObjectStatus;
+                const html2 = `
+                <li>${status}</li>
+                `;
+                
+                
+                if (todosObjectStatus === "Done") {
+                    html = `
+                    <li class="task status task-status-done">${status}</li>
+                    `;
+                } else {
+                    html = `
+                    <li class="task status task-status-todo">${status}</li>
+                    `;
+                }
+                const html = `
+                <li>${status}</li>
+                `;
+                
+            todosStatus += html2;
+            });
+        
+            innerTodosStatus.innerHTML = todosStatus;
+        }
+
+        todosListStatus();
+        */
+        
+        
+        
+
+        
+
+        //document.querySelectorAll('tast-text').innerHTML = todos[1].text
+
+
+        /*
+        function todosList(listen) {
+            innerTodos.innerHTML = todos.text
+        }
+        */
+        
+        //https://www.w3schools.com/js/js_arrays.asp
         
         //CLOCK
         
