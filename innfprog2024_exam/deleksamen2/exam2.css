@@ -121,7 +121,8 @@ main {
     text-align: left;
 }
 
-/*
+
+/* Forsøkte først å legge books inn i lister
 #booklines {
     list-style: none;
     width: 100%;
@@ -195,8 +196,10 @@ main {
             justify-content: space-between;
             clear: both;
             border-bottom: 1px dotted #074b72;
-            padding-bottom: 7px;
+            /*Forsøker å få det likt som på videoen*/
+            padding-bottom: 15px;
             margin-top: 5px;
+            
         }
     }
 }
@@ -207,13 +210,16 @@ main {
 .task-status {
     color: white;
     width: 60px;
-    /*float: right;*/
+    float: right;
     font-size: .8rem;
     border-radius: 5px;
     margin-left: .5rem;
     margin-bottom: 1px;
     padding: 5px;
     text-align: center;
+    /*Forsøker å få det likt som på videoen*/
+    height: 20px;
+    
 }
 .task-status-done {
     background: #6ea100;
