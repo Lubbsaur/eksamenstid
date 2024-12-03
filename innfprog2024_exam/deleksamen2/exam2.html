@@ -12,7 +12,7 @@
             <h2>Kontakter</h2>
             <div id="contactlist"></div>
         </section>
-        <aside id="clock">13:37</aside>
+        <aside id="clock"></aside>
         <section id="books">
             <h2>Regnskap</h2>
             <p>Innkommende egenkapital: Kr. <span id="incomingequity"></span></p>
@@ -54,6 +54,7 @@
     </main>
 
     <script>
+        
         //CONTACTS
         const contacts = [
             {lastname: "Hansen", firstname: "Stine", office: "D2", mail: "s.hansen@company.com"},
@@ -63,12 +64,18 @@
             {lastname: "Jansson", firstname: "Sigried", office: "B1", mail: "s.jansson@company.com"}
         ]
 
-        let contactlist = ""
+        //For å sortere contacts-listen fant jeg metoden en funksjon (https://www.javascripttutorial.net/javascript-array-sort/). Oppgaven var vanskelig å løse siden den enkle .sort-metoden ((a, b) => a - b) ikke fungerer så bra når det kommer til store bokstaver.
+
+        contacts.sort((a, b) => {
+            let x = a.lastname.toUpperCase(),
+                y = b.lastname.toUpperCase();
+            return x == y ? 0 : x > y ? 1 : -1;
+        });
 
         contacts.map((contact, index) => {
             contactlist += `<article>
                 <p><strong>${contact.lastname}, ${contact.firstname}</strong><br />
-                    Kontor: ${contact.office} | E-post: ${contact.mail}</p>
+                    Kontor: ${contact.office} | E-post: <a href="${contact.mail}">${contact.mail}</a></p>
             </article>`
         })
 
@@ -88,6 +95,29 @@
         document.getElementById("incomingequity").innerHTML = equity
         let balance = 0;    //Startbalanse for utregning av utgifter og inntekter i november
 
+        //Jeg gjenbrukte koden fra todos
+        const innerBooks = document.getElementById('booklines')
+        
+        function booksList() {
+            let booksPrint = '';
+            books.forEach((booksObject, index) => {
+                const {text, date, amount} = booksObject;
+                const html = `
+                    <div class=bookline>
+                        <span class="booktext">${text}</span>
+                        <span class="bookdate">${date}</span>
+                        <span class="bookamount">${amount} kr</span>
+                    </div>
+                `     
+                booksPrint += html
+            });
+        
+            innerBooks.innerHTML = booksPrint;
+
+        };
+
+        booksList();
+
 
         //TODOS
         const todos = [
@@ -98,14 +128,17 @@
             {text: "Dette er en test", status: "Done"}
         ]
 
-        const innerTodos = document.getElementById('todolist')
-        
-        let todosText = '';
+        //Jeg har benyttet https://www.youtube.com/watch?v=EerdGm-ehJQ&t=61391s&ab_channel=SuperSimpleDev som grunnlag til mye av todos. Ca. 8:43, 10:05 og 10:39 inn i videoen.
+        //Tanken er å løpe gjennom todos-listen med .forEach-metoden, for å så å printe det ut til siden. Dette gjør jeg i todoList-funksjonen.
 
-        function todoListText() {
+        const innerTodos = document.getElementById('todolist')
+
+        todoList();
+
+        function todoList() {
+            let todosText = '';
             todos.forEach((todosObject, index) => {
                 const {text, status} = todosObject;
-                console.log(todosObject.status)
                 if (todosObject.status === "Done") {
                     const html = `
                     <li>
@@ -129,58 +162,53 @@
 
         };
 
-        let todosStatus = '';
+        document.getElementById('savetask').addEventListener('click', () => {
+            leggeTil();
+        });
 
-        todoListText();
+        //Så oppretter jeg en ny funksjon som lagrer input i Oppgavetekst-feltet i en variabel, for så å pushe det til todos-listen. Siden nye oppgaver alltid vil opprettes med statusen "To do", slipper jeg å gjøre det dynamisk her.
 
-        /*function todoListStatus() {
-            todos.forEach((todosObjectStatus, index) => {
-                const {status} = todosObjectStatus;
-                const html2 = `
-                <li>${status}</li>
-                `;
-                
-                
-                if (todosObjectStatus === "Done") {
-                    html = `
-                    <li class="task status task-status-done">${status}</li>
-                    `;
-                } else {
-                    html = `
-                    <li class="task status task-status-todo">${status}</li>
-                    `;
-                }
-                const html = `
-                <li>${status}</li>
-                `;
-                
-            todosStatus += html2;
-            });
-        
-            innerTodosStatus.innerHTML = todosStatus;
+        function leggeTil() {
+            const inputTodos = document.getElementById('task')
+            const text = inputTodos.value;
+            const status = 'To do';
+
+            console.log(inputTodos.value)
+            
+            //Jeg la alt inn i en if-test, slik at hvis det ikke er noe input vil det returnere null.
+            if (inputTodos.value != '') {
+                todos.push({
+                text,
+                status
+            })
+            
+            inputTodos.value = '';
+            inputTodos.placeholder = '';
+            
+            todoList();
+            
+            } else {
+                //La til en tekst hvis det ikke er fyllt inn noe i input-feltet: https://www.w3schools.com/jsref/prop_text_placeholder.asp
+                inputTodos.placeholder = 'Vennligst fyll inn et gjøremål';
+                return null;
+            }
         }
 
-        todosListStatus();
-        */
-        
-        
-        
-
-        
-
-        //document.querySelectorAll('tast-text').innerHTML = todos[1].text
-
-
-        /*
-        function todosList(listen) {
-            innerTodos.innerHTML = todos.text
-        }
-        */
-        
-        //https://www.w3schools.com/js/js_arrays.asp
-        
         //CLOCK
+        //https://www.youtube.com/watch?v=-v36WcbDs9k&ab_channel=HowtoBecomeaDeveloper
+        function klokke() {
+            const tid = new Date();
+            let timer = tid.getHours();
+            let minutter = tid.getMinutes();
+            let sekunder = tid.getSeconds();
+
+            document.getElementById('clock').innerHTML = `${timer}:${minutter}:${sekunder}`;
+        };
         
+        setInterval(klokke, 1000);
+
+        klokke();
+
     </script>
 </body>
 </html>
