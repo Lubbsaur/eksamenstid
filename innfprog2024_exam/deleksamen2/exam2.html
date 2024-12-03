@@ -119,13 +119,29 @@
         booksList();
 
 
+        /* https://www.freecodecamp.org/news/how-to-loop-through-an-array-in-javascript-js-iterate-tutorial/ */
+        let p = 0;
+
+        while (p < books.length) {
+            /*console.log(books[p].amount);*/
+            balance += books[p].amount;
+            p++
+            
+        }
+
+        document.getElementById('balance').innerHTML = balance + ',-';
+
+        equityAfter = equity + balance;
+
+        document.getElementById('equity').innerHTML = equityAfter + ',-';
+
+
         //TODOS
         const todos = [
             {text: "Les eksamensteksten", status: "Done"},
             {text: "Løs Innføring i programmerings-eksamen", status: "Done"},
             {text: "Lag funksjonalitet for å registrere nye oppgaver", status: "To do"},
-            {text: "Lag funksjonalitet for å sette en eksisterende oppgave til utført ved å endre status", status: "To do"},
-            {text: "Dette er en test", status: "Done"}
+            {text: "Lag funksjonalitet for å sette en eksisterende oppgave til utført ved å endre status", status: "To do"}
         ]
 
         //Jeg har benyttet https://www.youtube.com/watch?v=EerdGm-ehJQ&t=61391s&ab_channel=SuperSimpleDev som grunnlag til mye av todos. Ca. 8:43, 10:05 og 10:39 inn i videoen.
@@ -151,7 +167,7 @@
                     const html = `
                     <li>
                     <span class="task-text">${text}</span>
-                    <span class="task-status task-status-todo">${status}</span>
+                    <span class="task-status task-status-todo" onClick="hukeAv()">${status}</span>
                     </li>
                     `;
                     todosText += html;
@@ -192,6 +208,30 @@
                 inputTodos.placeholder = 'Vennligst fyll inn et gjøremål';
                 return null;
             }
+        }
+
+        /*todosKnapp = document.querySelectorAll('.task-status')
+
+        todosKnapp.addEventListener('click', (e) => {
+            console.log(e.currentTarget === this)
+        })
+
+        document.querySelectorAll('.task-status').forEach((event, index) => {
+            event.addEventListener('click', () => {
+
+                console.log(event)
+            })
+        })
+        */
+
+        function hukeAv() {
+            let todosDone = ''
+            todos.forEach((todosKnapp, index) => {
+                let {text, status} = todosKnapp;
+                return status = "Done"
+                todoList();
+            })
+            
         }
 
         //CLOCK
