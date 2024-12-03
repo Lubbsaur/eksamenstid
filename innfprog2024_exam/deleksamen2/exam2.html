@@ -167,7 +167,7 @@
                     const html = `
                     <li>
                     <span class="task-text">${text}</span>
-                    <span class="task-status task-status-todo" onClick="hukeAv()">${status}</span>
+                    <span class="task-status task-status-todo">${status}</span>
                     </li>
                     `;
                     todosText += html;
@@ -190,6 +190,7 @@
             const status = 'To do';
 
             console.log(inputTodos.value)
+
             
             //Jeg la alt inn i en if-test, slik at hvis det ikke er noe input vil det returnere null.
             if (inputTodos.value != '') {
@@ -197,11 +198,24 @@
                 text,
                 status
             })
-            
             inputTodos.value = '';
             inputTodos.placeholder = '';
-            
             todoList();
+            /*
+            todos.forEach((todosObject, index) => {
+                const {text, status} = todosObject;
+                const html = `
+                    <li>
+                    <span class="task-text">${text}</span>
+                    <span class="task-status task-status-done">${status}</span>
+                    </li>
+                    `;
+                    todosText += html;
+            })
+
+            innerTodos.innerHTML += todosText;
+            */
+            
             
             } else {
                 //La til en tekst hvis det ikke er fyllt inn noe i input-feltet: https://www.w3schools.com/jsref/prop_text_placeholder.asp
@@ -210,29 +224,37 @@
             }
         }
 
-        /*todosKnapp = document.querySelectorAll('.task-status')
+        
+        //Jeg brukte igjen denne videoen som grunnlag (https://www.youtube.com/watch?v=EerdGm-ehJQ&t=41567s&ab_channel=SuperSimpleDev), samt https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/ for splicing.
 
-        todosKnapp.addEventListener('click', (e) => {
-            console.log(e.currentTarget === this)
-        })
+        document.querySelectorAll('.task-status')
+            .forEach((event, index) => {
+                event.addEventListener('click', () => {
+                    done(event);
+                    
+            });
+        });
 
+        /*
         document.querySelectorAll('.task-status').forEach((event, index) => {
             event.addEventListener('click', () => {
-
-                console.log(event)
+                done(event);               
             })
         })
+        
         */
 
-        function hukeAv() {
-            let todosDone = ''
-            todos.forEach((todosKnapp, index) => {
-                let {text, status} = todosKnapp;
-                return status = "Done"
-                todoList();
-            })
+        function done(event) {
+            event.classList.remove("task-status-todo")
+            event.classList.add("task-status-done")
+            event.innerHTML = "Done";
+            for (var i = 0; i < event.length; i++) {
+                todos[i].status.splice(event, "Done")
+            }
+            todoList();
             
         }
+        
 
         //CLOCK
         //https://www.youtube.com/watch?v=-v36WcbDs9k&ab_channel=HowtoBecomeaDeveloper
@@ -248,6 +270,8 @@
         setInterval(klokke, 1000);
 
         klokke();
+
+        
 
     </script>
 </body>
