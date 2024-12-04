@@ -30,6 +30,8 @@
                 <option value="9">10</option>
             </select> med #<input type="text" id="newColor" /> <button id="saveNewColor">Lagre ny farge</button></p>
         </section>
+
+        <p id="testing">Her testes det</p>
     </main>
     
 
@@ -43,34 +45,55 @@
         /* --- YOUR FUNCTIONALITY AND CODE GOES HERE --- */
 
         //Lager et tomt array til fargene:
-        const fargeFirkanter = [
+        const farger = [
             {
                 color: "#d63cb3",
                 x: 0,
                 y: 0
             }, {
                 color: "#d6543c",
-                x: 0,
+                x: 100,
+                y: 0
+            }, {
+                color: "#d6543c",
+                x: 200,
                 y: 0
             }
         ];
 
         //Denne er kopiert fra Workshop 3
         function drawRect(x = 0, y = 0, w = 100, h = 100, color = "#000000") {
-            ctx.beginPath()
-            ctx.rect(x, y, w, h)
+            ctx.beginPath();
+            ctx.rect(x, y, w, h);
             ctx.fillStyle = color;
             ctx.fill();
             //ctx.stroke();
             ctx.closePath();
-        }
+        };
 
-        
+        function addColor() {
+            
+            const color = newColorFind();
+            const x = 100;
+            const y = 0;
+
+            farger.push({
+                color,
+                x,
+                y
+            });
+                //document.getElementById('testing').innerHTML = 'yolo'
+            
+        }
 
         //EventListener til "Legg til en farge"-knappen
         document.getElementById('addColor').addEventListener('click', () => {
-            const color = newColorFind();
-            drawRect(500, 0, 100, 100, color);
+            //const color = newColorFind();
+            addColor();
+            let thisSquare = farger[farger.length - 1]
+            let thisColor = thisSquare.color
+            console.log(thisColor)
+            drawRect(100, 0, 100, 100, thisColor);
         })
 
         const arrayOfColorFunctions = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
@@ -90,8 +113,6 @@
             return randomColorString
         }
 
-        newColorFind();
-
         //Jeg lager en eventlistener til tilsvarende knapp for å tømme canvas.
         document.getElementById('emptyArray').addEventListener('click', () => {
             clearRect();
@@ -102,7 +123,7 @@
         }
         
         //Tegner ut en firkant (https://lms.webtricks.blog/kurs/innforing-i-programmering/canvas-tegning/tegne-basisformer)
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.rect(0, 0, 100, 100);
         ctx.fillStyle = "#1593fc";
         ctx.fill();
@@ -119,10 +140,12 @@
         ctx.fillStyle = "#3a9891";
         ctx.fill();
         ctx.closePath();
-
-        ctx.font = "50px Arial";
+        */
         
-        ctx.fillText("Anders", 0, 100);
+
+        ctx.font = "20px Arial";
+        
+        ctx.strokeText("Anders", 0, 100);
 
         
 
