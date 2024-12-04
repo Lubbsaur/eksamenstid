@@ -41,6 +41,89 @@
         const ctx = canvas.getContext("2d")
 
         /* --- YOUR FUNCTIONALITY AND CODE GOES HERE --- */
+
+        //Lager et tomt array til fargene:
+        const fargeFirkanter = [
+            {
+                color: "#d63cb3",
+                x: 0,
+                y: 0
+            }, {
+                color: "#d6543c",
+                x: 0,
+                y: 0
+            }
+        ];
+
+        //Denne er kopiert fra Workshop 3
+        function drawRect(x = 0, y = 0, w = 100, h = 100, color = "#000000") {
+            ctx.beginPath()
+            ctx.rect(x, y, w, h)
+            ctx.fillStyle = color;
+            ctx.fill();
+            //ctx.stroke();
+            ctx.closePath();
+        }
+
+        
+
+        //EventListener til "Legg til en farge"-knappen
+        document.getElementById('addColor').addEventListener('click', () => {
+            const color = newColorFind();
+            drawRect(500, 0, 100, 100, color);
+        })
+
+        const arrayOfColorFunctions = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+
+        //Generer en tilfeldig farge med newColorFind-funksjon
+        //https://css-tricks.com/snippets/javascript/random-hex-color/ 
+        function newColorFind(){
+            let randomColorString = '#';
+            for (let x = 0; x < 6; x++){
+
+                let index = Math.floor(Math.random() * 16)
+                let value = arrayOfColorFunctions[index]
+
+                randomColorString += value
+                
+            }
+            return randomColorString
+        }
+
+        newColorFind();
+
+        //Jeg lager en eventlistener til tilsvarende knapp for å tømme canvas.
+        document.getElementById('emptyArray').addEventListener('click', () => {
+            clearRect();
+        })
+
+        function clearRect() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+        }
+        
+        //Tegner ut en firkant (https://lms.webtricks.blog/kurs/innforing-i-programmering/canvas-tegning/tegne-basisformer)
+        ctx.beginPath();
+        ctx.rect(0, 0, 100, 100);
+        ctx.fillStyle = "#1593fc";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(100, 0, 100, 100);
+        ctx.fillStyle = "#3a9891";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.rect(200, 0, 100, 100);
+        ctx.fillStyle = "#3a9891";
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.font = "50px Arial";
+        
+        ctx.fillText("Anders", 0, 100);
+
         
 
         //requestAnimationFrame

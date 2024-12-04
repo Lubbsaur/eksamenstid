@@ -154,6 +154,7 @@
             console.log(todos)
         }
 
+        //Her er hovedfunksjonen i todo-listen. Jeg henter ut informasjonen fra todos-arrayet med .forEach-metoden, og printer det ut på siden. if/else-testen er for å skille mellom "Done" og "To do" statusen.
         function renderTodoList() {
             const innerTodos = document.getElementById('todolist')
             let todosText = '';
@@ -182,6 +183,7 @@
 
         };
 
+        //Her kaller jeg leggeTil-funksjonen når man trykker på "Lagre"-knappen.
         document.getElementById('savetask').addEventListener('click', () => {
             leggeTil();
         });
@@ -189,7 +191,6 @@
         renderTodoList();
 
         //Så oppretter jeg en ny funksjon som lagrer input i Oppgavetekst-feltet i en variabel, for så å pushe det til todos-listen. Siden nye oppgaver alltid vil opprettes med statusen "To do", slipper jeg å gjøre det dynamisk her.
-
         function leggeTil() {
             const inputTodos = document.getElementById('task')
             const text = inputTodos.value;
@@ -214,39 +215,6 @@
                 return null;
             }
         }
-
-        
-        //Jeg brukte igjen denne videoen som grunnlag (https://www.youtube.com/watch?v=EerdGm-ehJQ&t=41567s&ab_channel=SuperSimpleDev), samt https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/ for splicing.
-
-        /*
-        document.querySelectorAll('.task-status')
-            .forEach((event, index) => {
-                event.addEventListener('click', () => {
-                    const inText = index.text;
-                    const text = inText;
-                    const inStatus = index.status;
-                    const status = inStatus;
-                    const todoItem = {text, status}
-                    todos.splice(index, 1, todoItem)
-                    console.log(todos)
-                    event.classList.remove("task-status-todo")
-                    event.classList.add("task-status-done")
-                    event.innerHTML = "Done";
-            });
-        });
-        
-        function done(event) {
-            event.classList.remove("task-status-todo")
-            event.classList.add("task-status-done")
-            event.innerHTML = "Done";
-            for (var i = 0; i < event.length; i++) {
-                todos[i].status.splice(event, "Done")
-            }
-            todoList();
-            
-        }
-        */
-        
 
         //CLOCK
         //https://www.youtube.com/watch?v=-v36WcbDs9k&ab_channel=HowtoBecomeaDeveloper
