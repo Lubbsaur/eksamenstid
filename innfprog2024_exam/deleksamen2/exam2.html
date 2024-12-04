@@ -147,11 +147,15 @@
         //Jeg har benyttet https://www.youtube.com/watch?v=EerdGm-ehJQ&t=61391s&ab_channel=SuperSimpleDev som grunnlag til mye av todos. Ca. 8:43, 10:05 og 10:39 inn i videoen.
         //Tanken er å løpe gjennom todos-listen med .forEach-metoden, for å så å printe det ut til siden. Dette gjør jeg i todoList-funksjonen.
 
-        const innerTodos = document.getElementById('todolist')
+        //Jeg fikk hjelp av chatGPT til å lage denne funksjonen, samt å legge en onclick-funksjon på todo-knappen i renderTodoList. La ved kopi av samtalen i arbeidsdokumentet.
+        function toggleTaskStatus(index) {
+            todos[index].status = todos[index].status === "To do" ? "Done" : "Done";
+            renderTodoList();  // Re-render the list
+            console.log(todos)
+        }
 
-        todoList();
-
-        function todoList() {
+        function renderTodoList() {
+            const innerTodos = document.getElementById('todolist')
             let todosText = '';
             todos.forEach((todosObject, index) => {
                 const {text, status} = todosObject;
@@ -167,7 +171,7 @@
                     const html = `
                     <li>
                     <span class="task-text">${text}</span>
-                    <span class="task-status task-status-todo">${status}</span>
+                    <span class="task-status task-status-todo" onclick="toggleTaskStatus(${index})">${status}</span>
                     </li>
                     `;
                     todosText += html;
@@ -181,6 +185,8 @@
         document.getElementById('savetask').addEventListener('click', () => {
             leggeTil();
         });
+
+        renderTodoList();
 
         //Så oppretter jeg en ny funksjon som lagrer input i Oppgavetekst-feltet i en variabel, for så å pushe det til todos-listen. Siden nye oppgaver alltid vil opprettes med statusen "To do", slipper jeg å gjøre det dynamisk her.
 
@@ -200,22 +206,7 @@
             })
             inputTodos.value = '';
             inputTodos.placeholder = '';
-            todoList();
-            /*
-            todos.forEach((todosObject, index) => {
-                const {text, status} = todosObject;
-                const html = `
-                    <li>
-                    <span class="task-text">${text}</span>
-                    <span class="task-status task-status-done">${status}</span>
-                    </li>
-                    `;
-                    todosText += html;
-            })
-
-            innerTodos.innerHTML += todosText;
-            */
-            
+            renderTodoList();
             
             } else {
                 //La til en tekst hvis det ikke er fyllt inn noe i input-feltet: https://www.w3schools.com/jsref/prop_text_placeholder.asp
@@ -227,23 +218,23 @@
         
         //Jeg brukte igjen denne videoen som grunnlag (https://www.youtube.com/watch?v=EerdGm-ehJQ&t=41567s&ab_channel=SuperSimpleDev), samt https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/ for splicing.
 
+        /*
         document.querySelectorAll('.task-status')
             .forEach((event, index) => {
                 event.addEventListener('click', () => {
-                    done(event);
-                    
+                    const inText = index.text;
+                    const text = inText;
+                    const inStatus = index.status;
+                    const status = inStatus;
+                    const todoItem = {text, status}
+                    todos.splice(index, 1, todoItem)
+                    console.log(todos)
+                    event.classList.remove("task-status-todo")
+                    event.classList.add("task-status-done")
+                    event.innerHTML = "Done";
             });
         });
-
-        /*
-        document.querySelectorAll('.task-status').forEach((event, index) => {
-            event.addEventListener('click', () => {
-                done(event);               
-            })
-        })
         
-        */
-
         function done(event) {
             event.classList.remove("task-status-todo")
             event.classList.add("task-status-done")
@@ -254,6 +245,7 @@
             todoList();
             
         }
+        */
         
 
         //CLOCK
