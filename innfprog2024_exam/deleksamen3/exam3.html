@@ -45,21 +45,7 @@
         /* --- YOUR FUNCTIONALITY AND CODE GOES HERE --- */
 
         //Lager et tomt array til fargene:
-        const farger = [
-            {
-                color: "#d63cb3",
-                x: 0,
-                y: 0
-            }, {
-                color: "#d6543c",
-                x: 100,
-                y: 0
-            }, {
-                color: "#d6543c",
-                x: 200,
-                y: 0
-            }
-        ];
+        let farger = [];
 
         //Denne er kopiert fra Workshop 3
         function drawRect(x = 0, y = 0, w = 100, h = 100, color = "#000000") {
@@ -71,36 +57,44 @@
             ctx.closePath();
         };
 
-        function addColor() {
-            
-            const color = newColorFind();
-            const x = 100;
-            const y = 0;
+        //Funksjon for å legge til hver farge-boks (kode inspirert av todo i exam2)
+        function addColor() {  
+               
+            //Jeg legger det inn i en if-test, slik at listen/fargene ikke overskrider 10.
+            if (farger.length <= 9) {
+                const newColor = newColorFind();
+                const color = newColor;
+                let x = 0
+                const y = 0
 
-            farger.push({
+                //https://stackoverflow.com/questions/32796230/with-javascript-how-would-i-increment-numbers-in-an-array-using-a-for-loop
+                for (var i = 0; i < farger.length; i++) {
+                    x += 100
+                }
+            
+                drawRect(x, 0, 100, 100, newColor);
+
+                farger.push({
                 color,
                 x,
                 y
-            });
-                //document.getElementById('testing').innerHTML = 'yolo'
-            
+            })} else {
+                alert("Du kan ikke legge til flere farger med denne knappen.")
+            }
+                   
         }
 
         //EventListener til "Legg til en farge"-knappen
         document.getElementById('addColor').addEventListener('click', () => {
             //const color = newColorFind();
             addColor();
-            let thisSquare = farger[farger.length - 1]
-            let thisColor = thisSquare.color
-            console.log(thisColor)
-            drawRect(100, 0, 100, 100, thisColor);
+            console.log(farger)
         })
 
-        const arrayOfColorFunctions = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
-
-        //Generer en tilfeldig farge med newColorFind-funksjon
+        //Generer en tilfeldig farge med newColorFind-funksjon som jeg fant i lenken under.
         //https://css-tricks.com/snippets/javascript/random-hex-color/ 
         function newColorFind(){
+            const arrayOfColorFunctions = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
             let randomColorString = '#';
             for (let x = 0; x < 6; x++){
 
@@ -113,14 +107,17 @@
             return randomColorString
         }
 
-        //Jeg lager en eventlistener til tilsvarende knapp for å tømme canvas.
+        //Jeg lager en eventlistener til tilsvarende knapp for å tømme canvas og farger-listen.
         document.getElementById('emptyArray').addEventListener('click', () => {
             clearRect();
+            farger = [];
         })
 
         function clearRect() {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
         }
+
+
         
         //Tegner ut en firkant (https://lms.webtricks.blog/kurs/innforing-i-programmering/canvas-tegning/tegne-basisformer)
         /*ctx.beginPath();
@@ -146,8 +143,6 @@
         ctx.font = "20px Arial";
         
         ctx.strokeText("Anders", 0, 100);
-
-        
 
         //requestAnimationFrame
         const requestAnimationFrame = window.requestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame
